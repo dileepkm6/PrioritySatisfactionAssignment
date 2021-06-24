@@ -1,0 +1,31 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.assignment.api.persistence.PriorityMaintenanceDao">
+    <select id="getPriorityEntities" resultType="com.assignment.api.entity.PriorityEntity">
+        select
+        priority as priority,
+        satisfaction_rating as satisfactionRating
+        from PRIORITY
+    </select>
+    <select id="getAllPriorities" resultType="java.lang.String">
+        select
+        priority
+        from PRIORITY
+    </select>
+    <insert id="addPriority">
+        insert into priority(priority) values (#{priority})
+    </insert>
+    <select id="getUserRating" resultType="com.assignment.api.entity.PriorityEntity">
+        select
+            priority as priority,
+            satisfaction_rating as satisfactionRating
+        from user_priority
+        where user_name = rtrim(#{userName})
+    </select>
+    <update id="updateSatisfactionRating">
+        update user_priority set satisfaction_rating = #{satisfactionRating}
+        where user_name = rtrim(#{userName}) and priority = rtrim(#{priority})
+    </update>
+</mapper>

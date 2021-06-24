@@ -1,0 +1,30 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.assignment.api.persistence.UserMaintenanceDao">
+
+    <resultMap id="UserResultMap" type="com.assignment.api.entity.UserEntity">
+        <id column="user_name" property="userName" />
+        <result column="email_id" property="emailId" />
+    </resultMap>
+
+    <select id="getUsers" resultType="com.assignment.api.entity.UserEntity">
+        select
+            user_name as userName,
+            email_id as emailId
+        from USER
+    </select>
+    <select id="findUserByUserName" resultType="com.assignment.api.entity.UserEntity">
+        select
+            user_id as userId,
+            user_name as userName,
+            email_id as emailId,
+            role as role
+        from user WHERE user_name = rtrim(#{userName})
+    </select>
+
+<!--    <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">-->
+<!--        insert into users(name,email) values(#{name},#{email})-->
+<!--    </insert>-->
+</mapper>
