@@ -15,16 +15,13 @@
             email_id as emailId
         from USER
     </select>
+
     <select id="findUserByUserName" resultType="com.assignment.api.entity.UserEntity">
         select
-            user_id as userId,
             user_name as userName,
             email_id as emailId,
             role as role
         from user WHERE user_name = rtrim(#{userName})
     </select>
 
-<!--    <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">-->
-<!--        insert into users(name,email) values(#{name},#{email})-->
-<!--    </insert>-->
 </mapper>

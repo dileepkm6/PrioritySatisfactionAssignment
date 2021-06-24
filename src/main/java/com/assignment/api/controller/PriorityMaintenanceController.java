@@ -9,12 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Controller
 @RequestMapping("api/")
+@Validated
 public class PriorityMaintenanceController {
 
     @Autowired
@@ -35,7 +41,7 @@ public class PriorityMaintenanceController {
         return new ResponseEntity<List<PriorityEntity>>(priorityMaintenanceService.getUserRating(userName), HttpStatus.OK);
     }
     @PostMapping("addPriority")
-    public ResponseEntity<String> addPriority(@RequestHeader(value = "userName",required = true) String userName, @RequestParam("priority") String priority)
+    public ResponseEntity<String> addPriority(@RequestHeader(value = "userName",required = true) String userName,@NotBlank @RequestParam("priority") String priority)
     {
         UserEntity user = userService.findUserByUserName(userName);
        if(user!=null && user.getRole()!=null && user.getRole().equals("admin"))
@@ -47,7 +53,7 @@ public class PriorityMaintenanceController {
         return new ResponseEntity<String>("User doesn't permission to add priority",HttpStatus.CREATED);
     }
     @PostMapping("/updateSatisfactionRating")
-    public ResponseEntity<String> updateSatisfactionRating(@RequestHeader(value = "userName",required = true) String userName,@RequestBody UpdateSatisfactionRatingRequest request)
+    public ResponseEntity<String> updateSatisfactionRating(@RequestHeader(value = "userName",required = true) String userName,@Valid @RequestBody UpdateSatisfactionRatingRequest request)
     {
         priorityMaintenanceService.updateSatisfactionRating(request,userName);
         return new ResponseEntity<>("successfully updated",HttpStatus.CREATED);

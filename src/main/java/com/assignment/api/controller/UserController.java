@@ -17,6 +17,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
+    /**
+     * @return userEntity
+     */
     @GetMapping("getUsers")
     public ResponseEntity<List<UserEntity>> getUsers() {
         return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
